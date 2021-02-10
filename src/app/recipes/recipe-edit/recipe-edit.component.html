@@ -1,0 +1,362 @@
+<div class="loadingContainer" style="margin-left: 22%">
+  <img *ngIf="loading" src="assets/images/Loaders/Loading.gif" alt="Loading" style="vertical-align: middle">
+</div>
+
+<div class="container-fluid" style="width: 75%">
+  <div class="row mt-2">
+    <div class="col-xs-12 col-md-6 col-md-offset-3" style="margin: 0 auto">
+
+      <form (submit)="onSubmit()" [formGroup]="form">
+
+        <div class="jumbotron p-4">
+          <div class="form-group">
+            <label for="recipeName" class="text-warning font-weight-bold">Recipe name</label>
+            <input type="text"
+                   id="recipeName"
+                   class="form-control"
+                   placeholder="Enter recipe name here"
+                   formControlName="recipeName"
+            >
+            <p
+              id="recipeNameError"
+              class="text-danger"
+              *ngIf="form.get('recipeName').invalid && form.get('recipeName').touched">
+              Enter valid recipe name
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="text-warning font-weight-bold">Recipe description</label>
+            <input
+              type="text"
+              id="description"
+              class="form-control"
+              placeholder="Enter short recipe description here"
+              formControlName="description"
+            >
+            <p
+              id="descriptionError"
+              class="text-danger"
+              *ngIf="form.get('description').invalid && form.get('description').touched">
+              Enter valid recipe description
+            </p>
+          </div>
+        </div>
+
+        <!-- Procedure Steps -->
+        <div class="jumbotron p-4">
+          <label for="procedureSteps" class="text-warning font-weight-bold">Recipe procedure steps</label>
+          <div class="row" style="margin-left: 10px ; margin-bottom: 10px" id="procedureSteps">
+            <div class="col-xs-12" formArrayName="procedureSteps">
+              <div
+                class="row"
+                *ngFor="let procedureControl of procedureControls ; let i = index"
+                [formGroupName]="i"
+                style="margin-top: 10px"
+              >
+                <div class="col-xs-6 col-md-8 col-lg-10">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text font-weight-bold">Step-{{i+1}}</span>
+                      <textarea class="form-control" formControlName="step" placeholder="Procedure step" cols="60" rows="2"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-4 col-lg-2">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="onDeleteProcedureStep(i)"
+                  >X</button>
+                </div>
+
+                  <p
+                    id="recipeProcedureError"
+                    class="text-danger ml-5"
+                    *ngIf="form.get(['procedureSteps',i]).touched && form.get(['procedureSteps',i]).invalid">
+                    Enter valid procedure
+                  </p>
+              </div>
+
+              <hr>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button
+                    class="btn btn-outline-info"
+                    type="button"
+                    (click)="onAddProcedureStep()"
+                  >
+                    Add step
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger ml-2"
+                    (click)="onDeleteAllProcedureSteps()"
+                  >Delete All Steps
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="jumbotron p-4">
+          <label for="categories" class="text-warning font-weight-bold">Recipe categories</label>
+          <div class="row" style="margin-left: 10px ; margin-bottom: 10px" id="categories">
+            <div class="col-xs-12" formArrayName="categories">
+              <div
+                class="row"
+                *ngFor="let categoryControl of categoryControls ; let i = index"
+                [formGroupName]="i"
+                style="margin-top: 10px"
+              >
+                <div class="col-xs-6 col-md-8 col-lg-10">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><img src="../../../assets/Recipe%20Icons/Category.png" style="width: 20px" alt="Category"></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      size="50"
+                      formControlName="category"
+                      placeholder="Category name"
+                      oninput="this.value = this.value.toUpperCase()"
+                    >
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-4 col-lg-2">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="onDeleteCategory(i)"
+                  >X</button>
+                </div>
+
+                <p
+                  id="recipeCategoryError"
+                  class="text-danger ml-5"
+                  *ngIf="form.get(['categories',i]).touched && form.get(['categories',i]).invalid">
+                  Enter valid category
+                </p>
+              </div>
+
+              <hr>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button
+                    class="btn btn-outline-info"
+                    type="button"
+                    (click)="onAddCategory()"
+                  >
+                    Add category
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger ml-2"
+                    (click)="onDeleteAllCategories()"
+                  >Delete All Categories
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="jumbotron p-4">
+          <label for="images" class="text-warning font-weight-bold">Images</label>
+          <div class="form-group input-group">
+            <div class="custom-file">
+              <input
+                type="file"
+                accept="image/*"
+                id="images"
+                class="custom-file-input form-control"
+                formControlName="images" multiple
+                (change)="onFileChange($event)"
+              >
+              <label for="images" #labelImport class="custom-file-label">Choose images</label>
+            </div>
+          </div>
+          <div class="jumbotron p-0" #filesJumbo style="min-height: 0 ; min-width: 0">
+
+          </div>
+          <p
+            id="recipeImageError"
+            class="text-danger ml-5"
+            *ngIf="form.get('images').touched && form.get('images').invalid">
+            Upload valid images
+          </p>
+        </div>
+
+        <!-- Ingredients -->
+        <div class="jumbotron p-4">
+          <label for="ingredients" class="text-warning font-weight-bold">Recipe ingredients</label>
+          <div class="row" style="margin-left: 10px ; margin-bottom: 10px" id="ingredients">
+            <div class="col-xs-12" formArrayName="ingredients">
+              <div
+                class="row"
+                *ngFor="let ingredientControl of ingredientControls ; let i = index"
+                [formGroupName]="i"
+                style="margin-top: 10px"
+              >
+                <div class="col-xs-8">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><img src="../../../assets/Recipe%20Icons/Ingredient.png" style="width: 20px" alt="Ingredient"></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      size="25"
+                      formControlName="ingredientName"
+                      placeholder="Ingredient name"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-xs-2 ml-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><img src="../../../assets/Recipe%20Icons/Quantity.png" style="width: 20px" alt="Quantity"></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="quantity"
+                      size="17"
+                      placeholder="Quantity With Units"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-xs-2 ml-2">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="onDeleteIngredient(i)"
+                  >X</button>
+                </div>
+
+                <p
+                  id="recipeIngredientError"
+                  class="text-danger ml-5"
+                  *ngIf="form.get(['ingredients',i]).touched && form.get(['ingredients',i]).invalid">
+                  Enter valid ingredient
+                </p>
+
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button
+                    class="btn btn-outline-info"
+                    type="button"
+                    (click)="onAddIngredient()">
+                    Add Ingredient</button>
+                  <button
+                    type="button"
+                    class="btn btn-danger ml-2"
+                    (click)="onDeleteAllIngredients()"
+                  >Delete All Ingredients
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video URL's -->
+        <div class="jumbotron p-4">
+          <label for="videos" class="text-warning font-weight-bold">Making video URL's</label>
+          <div class="row" style="margin-left: 10px ; margin-bottom: 10px" id="videos">
+            <div class="col-xs-12" formArrayName="videos">
+              <div
+                class="row"
+                *ngFor="let videoControl of videoControls ; let i = index"
+                [formGroupName]="i"
+                style="margin-top: 10px"
+              >
+                <div class="col-xs-8">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><img src="../../../assets/Recipe%20Icons/Video.png" style="width: 20px" alt="URL"></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      size="25"
+                      formControlName="video"
+                      placeholder="Video URL"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-xs-4 ml-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><img src="../../../assets/Recipe%20Icons/Language.png" style="width: 20px" alt="Language"></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      size="17"
+                      formControlName="language"
+                      placeholder="Video language"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-xs-2 ml-2">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="onDeleteVideo(i)"
+                  >X</button>
+                </div>
+
+                <p
+                  id="recipeVideosError"
+                  class="text-danger ml-5"
+                  *ngIf="form.get(['videos',i]).touched && form.get(['videos',i]).invalid">
+                  Enter valid videos content
+                </p>
+              </div>
+
+              <hr>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button
+                    class="btn btn-outline-info"
+                    type="button"
+                    (click)="onAddVideo()"
+                  >
+                    Add video
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger ml-2"
+                    (click)="onDeleteAllVideos()"
+                  >Delete All Videos
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5">
+          <button type="submit" class="btn btn-primary m-3" [disabled]="form.invalid">{{mode}}</button>
+          <button type="button" class="btn btn-warning m-3" (click)="onReset()">Reset</button>
+          <button type="button" class="btn btn-dark m-3" (click)="onCancel()">Cancel</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

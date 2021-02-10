@@ -1,0 +1,27 @@
+ul
+{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a
+{
+  text-decoration: none;
+  color: white;
+}
+
+.spacer
+{
+  flex: 1 1 auto;
+}
+
+ul
+{
+  display: flex;
+}
+
+.loginButton
+{
+  background-image: linear-gradient(#1A2980,#26D0CE);
+}

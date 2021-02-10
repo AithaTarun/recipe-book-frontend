@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12" *ngIf="uniqueCategories.length > 0">
+      <div class="card text-dark mb-3" style="max-width: 16rem ; max-height: 32rem">
+        <div class="card-header bg-info">Filters</div>
+        <div class="card-body">
+
+          <form [formGroup]="filtersForm">
+            <div formArrayName="categories">
+              <div *ngFor="let categoryControl of categoryControls ; let i = index" [formGroupName]="i">
+                <div class="custom-control custom-checkbox">
+                  <input formControlName="category" type="checkbox" class="custom-control-input" id="category{{i}}" (change)="selectedChanged(i)">
+                  <label class="custom-control-label" for="category{{i}}">{{uniqueCategories[i]}}</label>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-outline-danger btn-sm" type=reset style="float: right" (click)="onAllFiltersCleared()">Clear All</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

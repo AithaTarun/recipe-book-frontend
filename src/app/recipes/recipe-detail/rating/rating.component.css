@@ -1,0 +1,4 @@
+:host >>> .popover
+{
+  max-width: 400px;
+}

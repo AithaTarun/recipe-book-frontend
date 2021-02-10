@@ -1,0 +1,44 @@
+<div class="row" style="margin: 10px">
+  <div class="custom-control custom-switch custom-switch-lg" *ngIf="authService.getIsAuth()">
+    <input type="checkbox" class="custom-control-input" id="favSwitch" (change)="favModeChanged($event)">
+    <label class="custom-control-label" for="favSwitch">Switch to favourite recipes mode</label>
+  </div>
+</div>
+
+<div class="row w-25" style="margin: 10px auto">
+
+  <div class="input-group">
+    <input type="search" placeholder="Search Recipe"
+           class="form-control bg-light rounded-pill py-2 mr-1 pr-5"
+           style="border-color: #36D1DC"
+           (input)="searchChanged($event)"
+    >
+    <div class="input-group-append">
+      <button class="btn rounded-pill border-0 ml-n5" type="button">
+        <img src="./assets/Recipe%20Icons/search.png" height="28px" width="28px" alt="Search">
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row m-3">
+  <div class="col">
+    <button *ngIf="authService.getIsAdmin()" type="button" (click)="onNewRecipe()" class="btn btn-warning">New Recipe</button>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-3">
+    <app-recipe-filters>
+
+    </app-recipe-filters>
+  </div>
+
+  <div class="col-md-9">
+    <app-recipe-list>
+
+    </app-recipe-list>
+  </div>
+
+</div>

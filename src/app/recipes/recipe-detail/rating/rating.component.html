@@ -1,0 +1,33 @@
+<div>
+  <div *ngFor="let src of ratingRadiosSRC ; let i=index"
+       class="custom-control custom-control-inline"
+       [ngStyle]="{'pointer-events' : isCommented ? 'none' : 'auto' }"
+  >
+
+    <div placement="bottom"
+         [ngbPopover]="ratingText"
+         [autoClose]="'outside'"
+         popoverTitle="Comment"
+         triggers="manual"
+         #p="ngbPopover"
+         (click)="clicked(i)"
+         (dblclick)="p.open()"
+         (mouseleave)="onMouseLeave(i)" (mousemove)="onMouseMove(i)"
+    >
+      <div [ngbTooltip]="tooltipMessages[i]">
+        <img [src]="src" style="width: 32px ; height: 32px">
+      </div>
+    </div>
+
+
+    <ng-template #ratingText>
+      <textarea placeholder="Enter your comment here (Optional)" cols="50" rows="5" #ratingComment></textarea>
+      <button class="btn" style="float: right" (click)="onCommented(ratingComment,p)">
+        <img src="assets/Recipe%20Icons/SubmitArrow.png" style="width: 20px ; height: 20px">
+      </button>
+    </ng-template>
+
+
+  </div>
+</div>
+

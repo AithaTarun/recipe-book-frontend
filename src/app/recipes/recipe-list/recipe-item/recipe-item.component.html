@@ -1,0 +1,39 @@
+<div class="loadingContainer py-2">
+  <img *ngIf="loading" src="assets/images/Loaders/Item%20Loading.gif" alt="Loading" style="width : 18rem ; height: 18rem ;vertical-align: middle">
+</div>
+
+<div *ngIf="!loading" class="card border-info mb-3" style="max-width: 18rem;">
+
+  <div class="card-header bg-transparent border-success font-weight-bold text-primary">{{recipe.recipeName}}
+    <img [src]="favouriteSRC" (mousemove)="onFavMouseMove()" (mouseleave)="onFavMouseLeave()" (click)="onFavClicked()"
+         [ngbTooltip]="isFavourite ? 'Remove this recipe from your favourites' : 'Add this recipe to your favourites'"
+         tooltipClass="favTooltip"
+         *ngIf="authService.getIsAuth()"
+         alt="fav" style="float: right ; width: 25px ; height: 25px">
+  </div>
+
+  <a
+    style="cursor: pointer"
+    class="list-group-item clearfix"
+    [routerLink]="[recipe.id]"
+    routerLinkActive="active"
+    ngbTooltip="{{recipe.description}}"
+    placement="right"
+  >
+    <div class="card-body text-info">
+      <div class="">
+        <img class="card-img-top rounded" [src]="imageData" width="256px" height="256px" alt="Recipe Image">
+      </div>
+    </div>
+
+  <div class="card-footer bg-transparent border-info font-weight-bold">
+    <span class="badge badge-primary badge-pill mr-1" *ngFor="let category of recipe.categories">{{category}}</span>
+  </div>
+
+  </a>
+  <div class="card-footer bg-transparent border-info" *ngIf="authService.getIsAdmin()">
+    <button type="button" class="btn btn-outline-success" style="float: left" (click)="onRecipeEdit()">Edit</button>
+    <button type="button" class="btn btn-outline-danger" style="float: right" (click)="onRecipeDelete()">Delete</button>
+  </div>
+
+</div>

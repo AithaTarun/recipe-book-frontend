@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background: linear-gradient(#36D1DC,#5B86E5)">
+  <a class="navbar-brand" href="#"><img src="assets/logo.png" style="height: 55px;width: 55px" alt="Recipe Book"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navContent" (click)="toggleCollapsed()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!--#4CB8C4,#3CD3AD-->
+
+  <div id="navContent" [ngClass]="{'collapse' : collapsed, 'navbar-collapse' : true}">
+
+    <span class="spacer"></span>
+
+    <div ngbDropdown class="mr-3" *ngIf="userIsAuthenticated" display="dynamic">
+      <a class="nav-link" ngbDropdownToggle role="button">
+        <img src="assets/Recipe%20Icons/Account.png"  style="width: 40px ; height: 40px" alt="Account">
+      </a>
+
+      <div ngbDropdownMenu class="dropdown-menu">
+        <button ngbDropdownItem>Request a recipe</button>
+        <button ngbDropdownItem>Suggest a recipe</button>
+        <a routerLink="shopping-list" style="color: black" routerLinkActive="active" ngbDropdownItem>Go to shopping list</a>
+      </div>
+    </div>
+
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item" routerLinkActive="active" *ngIf="!userIsAuthenticated">
+        <a class="nav-link font-weight-bold rounded-pill"
+           style="cursor: pointer ; background-image: linear-gradient(40deg,#ffd86f,#fc6262) ; color: white" (click)="onLogin()">Login</a>
+      </li>
+
+      <li class="nav-item ml-2" routerLinkActive="active" *ngIf="!userIsAuthenticated">
+        <a class="nav-link font-weight-bold rounded-pill"
+           style="cursor: pointer ; background-image: linear-gradient(40deg,#45cafc,#303f9f) ; color: white" (click)="onSignup()">Signup</a>
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" *ngIf="userIsAuthenticated">
+        <button type="button" class="btn btn-info font-weight-bold" (click)="onLogout()">Logout</button>
+      </li>
+
+    </ul>
+
+  </div>
+</nav>

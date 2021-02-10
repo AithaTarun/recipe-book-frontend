@@ -1,0 +1,8 @@
+.favTooltip .tooltip-inner
+{
+  background: linear-gradient(#ff6c6c, #ff3980);
+}
+.favTooltip .arrow::before
+{
+  border-top-color: orangered;
+}

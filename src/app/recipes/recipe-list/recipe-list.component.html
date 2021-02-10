@@ -1,0 +1,22 @@
+<div class="row">
+  <app-recipe-item *ngFor="let recipe of recipes | slice : (currentPage-1)*recipesPerPage : (currentPage-1)*recipesPerPage + recipesPerPage; let i = index" [recipe]="recipe" [index]="i" class="m-2">
+  </app-recipe-item>
+</div>
+
+<div class="loadingContainer" style="margin-left: 22%">
+  <img *ngIf="loading" src="assets/images/Loaders/Loading.gif" alt="Loading" style="vertical-align: middle">
+</div>
+
+<div style="margin-left: 30%" *ngIf="recipes.length===0 && !loading">
+  <p style="vertical-align : middle ; font-weight: bolder ; font-size: xx-large ; font-family: Algerian,sans-serif" class="text-info">NO RECIPES</p>
+  <img src="assets/images/Searching.gif" alt="No Recipes">
+</div>
+
+<div class="w-50 mr-auto ml-auto mb-5 mt-5" *ngIf="recipes.length > 0">
+  <ngb-pagination [collectionSize]="totalRecipes" [(page)]="currentPage" [pageSize]="recipesPerPage" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+</div>
+
+
+
+
+
