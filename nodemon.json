@@ -1,9 +1,0 @@
-{
-  "env":
-  {
-    "SENDGRID_API_KEY" : "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",
-    "JWT_KEY" : "secretKey",
-    "FRONT_END_URL" : "http://localhost:4200",
-    "MONGO_DB_URL" : "mongodb://u4sx3uxpruyqv9jgqxih:q1lCffPdwzXriPUEXhYr@bccmotmdfyabule-mongodb.services.clever-cloud.com:27017/bccmotmdfyabule"
-  }
-}
